@@ -5,10 +5,10 @@ BINUTILS_SRCDIR = BINUTILS_SRCDIR_not_set
 GCC_SRCDIR = GCC_SRCDIR_not_set
 MUSL_SRCDIR = MUSL_SRCDIR_not_set
 
-GCC_CONFIG_FOR_TARGET = 
-COMMON_CONFIG = 
-GCC_CONFIG = 
-TOOLCHAIN_CONFIG = 
+GCC_CONFIG_FOR_TARGET =
+COMMON_CONFIG =
+GCC_CONFIG =
+TOOLCHAIN_CONFIG =
 
 XGCC_DIR = ../obj_gcc/gcc
 XGCC = $(XGCC_DIR)/xgcc -B $(XGCC_DIR)
@@ -49,6 +49,12 @@ endif
 
 ifneq ($(LIBTOOL),)
 LIBTOOL_ARG = LIBTOOL=$(LIBTOOL)
+endif
+
+ifneq ($(findstring arm,$(TARGET)),)
+ifeq ($(shell $(CXX) -v 2>&1 | grep -c "clang"), 1)
+TOOLCHAIN_CONFIG += CXXFLAGS="-fbracket-depth=512 -g -O2"
+endif
 endif
 
 MAKE += MULTILIB_OSDIRNAMES=
@@ -97,7 +103,7 @@ FULL_GCC_CONFIG += --with-build-sysroot=$(CURDIR)/obj_sysroot \
 	READELF_FOR_TARGET=$(PWD)/obj_binutils/binutils/readelf \
 	STRIP_FOR_TARGET=$(PWD)/obj_binutils/binutils/strip-new \
 	# end
-FULL_MUSL_CONFIG += CC="$(XGCC)" LIBCC="../obj_gcc/$(TARGET)/libgcc/libgcc.a" 
+FULL_MUSL_CONFIG += CC="$(XGCC)" LIBCC="../obj_gcc/$(TARGET)/libgcc/libgcc.a"
 MUSL_VARS = AR=../obj_binutils/binutils/ar RANLIB=../obj_binutils/binutils/ranlib
 obj_musl/.lc_configured: | obj_gcc/gcc/.lc_built
 obj_musl/.lc_built: | obj_gcc/$(TARGET)/libgcc/libgcc.a
@@ -108,7 +114,7 @@ else
 SYSROOT = /
 FULL_BINUTILS_CONFIG += --host=$(HOST)
 FULL_GCC_CONFIG += --host=$(HOST)
-MUSL_VARS = 
+MUSL_VARS =
 endif
 
 ifeq ($(TARGET),)
