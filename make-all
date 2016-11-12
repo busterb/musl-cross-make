@@ -62,4 +62,4 @@ if [ -x /usr/local/bin/gtar ]; then
 	TAR=gtar
 fi
 
-gtar cavf musl-cross.tar.xz musl-cross
+$TAR cavf musl-cross.tar.xz musl-cross
