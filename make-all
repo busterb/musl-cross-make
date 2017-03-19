@@ -5,6 +5,7 @@ set -e
 export MAKEFLAGS=-j4
 
 UNAME=`uname`
+HOST_ARCH=i486
 
 build() {
 	make clean
@@ -13,7 +14,7 @@ build() {
 	echo "MUSL_VER = git-stealthy-loading" >> config.mak
 	echo 'COMMON_CONFIG += CFLAGS="-g0 -Os" CXXFLAGS="-g0 -Os" LDFLAGS="-s"' >> config.mak
 	if [ "$UNAME" == 'Linux' ]; then
-		echo 'COMMON_CONFIG += CC="i486-linux-musl-gcc -static --static" CXX="i486-linux-musl-g++ -static --static"' >> config.mak
+		echo "COMMON_CONFIG += CC='$HOST_ARCH-linux-musl-gcc -static --static' CXX='$HOST_ARCH-linux-musl-g++ -static --static'" >> config.mak
 	else
 		echo 'COMMON_CONFIG += CC="clang -fbracket-depth=1024" CXX="clang++ -fbracket-depth=1024"' >> config.mak
 	fi
@@ -33,8 +34,8 @@ if [ ! -e tools/bin -a "$UNAME" == 'Linux' ]; then
 	cp config.mak.dist config.mak
 	rm -fr tools
 	make clean
-	make TARGET=i486-linux-musl > toolchain.log 2>&1
-	make TARGET=i486-linux-musl install >> toolchain.log 2>&1
+	make TARGET=$HOST_ARCH-linux-musl > toolchain.log 2>&1
+	make TARGET=$HOST_ARCH-linux-musl install >> toolchain.log 2>&1
 	mv output tools
 fi
 
