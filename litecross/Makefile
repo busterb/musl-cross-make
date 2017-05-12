@@ -5,10 +5,10 @@ BINUTILS_SRCDIR = BINUTILS_SRCDIR_not_set
 GCC_SRCDIR = GCC_SRCDIR_not_set
 MUSL_SRCDIR = MUSL_SRCDIR_not_set
 
-GCC_CONFIG_FOR_TARGET = 
-COMMON_CONFIG = 
-GCC_CONFIG = 
-TOOLCHAIN_CONFIG = 
+GCC_CONFIG_FOR_TARGET =
+COMMON_CONFIG =
+GCC_CONFIG =
+TOOLCHAIN_CONFIG =
 
 XGCC_DIR = ../obj_toolchain/gcc
 XGCC = $(XGCC_DIR)/xgcc -B $(XGCC_DIR)
@@ -25,6 +25,18 @@ endif
 
 ifneq ($(findstring powerpc64,$(TARGET)),)
 GCC_CONFIG_FOR_TARGET += --with-abi=elfv2
+endif
+
+ifneq ($(findstring powerpce500v1,$(TARGET)),)
+GCC_CONFIG_FOR_TARGET += -mabi=spe -mfloat-gprs=single -Wa,-me500
+endif
+
+ifneq ($(findstring powerpce500v2,$(TARGET)),)
+GCC_CONFIG_FOR_TARGET += -mabi=spe -mfloat-gprs=double -Wa,-me500x2
+endif
+
+ifneq ($(findstring powerpce500mc,$(TARGET)),)
+GCC_CONFIG_FOR_TARGET += -mabi=spe -mfloat-gprs=double -Wa,-me500mc
 endif
 
 ifneq ($(findstring mips64,$(TARGET))$(findstring mipsisa64,$(TARGET)),)
@@ -79,7 +91,7 @@ endif
 ifeq ($(HOST),)
 SYSROOT = /$(TARGET)
 FULL_TOOLCHAIN_CONFIG += --with-build-sysroot=$(CURDIR)/obj_sysroot
-FULL_MUSL_CONFIG += CC="$(XGCC)" LIBCC="../obj_toolchain/$(TARGET)/libgcc/libgcc.a" 
+FULL_MUSL_CONFIG += CC="$(XGCC)" LIBCC="../obj_toolchain/$(TARGET)/libgcc/libgcc.a"
 MUSL_VARS = AR=../obj_toolchain/binutils/ar RANLIB=../obj_toolchain/binutils/ranlib
 obj_musl/.lc_configured: | obj_toolchain/gcc/.lc_built
 obj_musl/.lc_built: | obj_toolchain/$(TARGET)/libgcc/libgcc.a

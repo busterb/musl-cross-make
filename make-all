@@ -41,6 +41,7 @@ fi
 
 export PATH=`pwd`/tools/bin:$PATH
 
+build powerpc-e500v2-linux-musl "GCC_CONFIG += --enable-default-pie"
 build s390x-linux-musl "GCC_CONFIG += --enable-default-pie"
 build aarch64-linux-musl "GCC_CONFIG += --enable-default-pie"
 build arm-linux-musleabihf "GCC_CONFIG += --enable-default-pie"
@@ -51,8 +52,8 @@ build x86_64-linux-musl "GCC_CONFIG += --enable-default-pie"
 build powerpc-linux-muslsf "GCC_CONFIG += --enable-default-pie"
 build powerpc64le-linux-musl "GCC_CONFIG += --enable-default-pie"
 build mips64-linux-muslsf "GCC_CONFIG += --enable-default-pie"
-build mipsel-linux-muslsf
-build mips-linux-muslsf
+build mipsel-linux-muslsf "GCC_CONFIG += --enable-default-pie"
+build mips-linux-muslsf "GCC_CONFIG += --enable-default-pie"
 
 mv output musl-cross
 set +e
