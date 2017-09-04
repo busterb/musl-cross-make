@@ -32,6 +32,7 @@ build() {
 
 if [ ! -e tools/bin -a "$UNAME" == 'Linux' ]; then
 	cp config.mak.dist config.mak
+	echo "COMMON_CONFIG += CC='gcc-6' CXX='g++-6'" >> config.mak
 	rm -fr tools
 	make clean
 	make TARGET=$HOST_ARCH > toolchain.log 2>&1
