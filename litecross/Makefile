@@ -28,15 +28,15 @@ GCC_CONFIG_FOR_TARGET += --with-abi=elfv2
 endif
 
 ifneq ($(findstring powerpce500v1,$(TARGET)),)
-GCC_CONFIG_FOR_TARGET += -mabi=spe -mfloat-gprs=single -Wa,-me500
+GCC_CONFIG_FOR_TARGET += -mabi=spe -mfloat-gprs=single -Wa,-me500 -Wl,--secure-plt
 endif
 
 ifneq ($(findstring powerpce500v2,$(TARGET)),)
-GCC_CONFIG_FOR_TARGET += -mabi=spe -mfloat-gprs=double -Wa,-me500x2
+GCC_CONFIG_FOR_TARGET += -mabi=spe -mfloat-gprs=double -Wa,-me500x2 -Wl,--secure-plt
 endif
 
 ifneq ($(findstring powerpce500mc,$(TARGET)),)
-GCC_CONFIG_FOR_TARGET += -mabi=spe -mfloat-gprs=double -Wa,-me500mc
+GCC_CONFIG_FOR_TARGET += -mabi=spe -mfloat-gprs=double -Wa,-me500mc -Wl,--secure-plt
 endif
 
 ifneq ($(findstring mips64,$(TARGET))$(findstring mipsisa64,$(TARGET)),)

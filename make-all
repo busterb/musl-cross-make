@@ -42,14 +42,15 @@ fi
 
 export PATH=`pwd`/tools/bin:$PATH
 
+build powerpc-linux-musl
+build powerpc-linux-muslsf
+build powerpc-e500v2-linux-musl
 build aarch64-linux-musl "GCC_CONFIG += --enable-default-pie"
 build arm-linux-musleabihf "GCC_CONFIG += --enable-default-pie"
 build armv5l-linux-musleabi "GCC_CONFIG += --enable-default-pie"
 build armv5b-linux-musleabi "GCC_CONFIG += --enable-default-pie"
 build i486-linux-musl "GCC_CONFIG += --enable-default-pie"
 build x86_64-linux-musl "GCC_CONFIG += --enable-default-pie"
-build powerpc-e500v2-linux-musl "GCC_CONFIG += --enable-default-pie"
-build powerpc-linux-muslsf "GCC_CONFIG += --enable-default-pie"
 build powerpc64le-linux-musl "GCC_CONFIG += --enable-default-pie"
 build mips64-linux-muslsf "GCC_CONFIG += --enable-default-pie"
 build mipsel-linux-muslsf "GCC_CONFIG += --enable-default-pie"
