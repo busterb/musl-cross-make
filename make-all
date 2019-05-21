@@ -10,8 +10,6 @@ HOST_ARCH=i486-linux-musl
 build() {
 	make clean
 
-	echo "MUSL_REPO = https://github.com/busterb/musl" > config.mak
-	echo "MUSL_VER = git-stealthy-loading" >> config.mak
 	echo 'COMMON_CONFIG += CFLAGS="-g0 -Os" CXXFLAGS="-g0 -Os" LDFLAGS="-s"' >> config.mak
 	if [ "$UNAME" == 'Linux' ]; then
 		echo "COMMON_CONFIG += CC='$HOST_ARCH-gcc -static --static' CXX='$HOST_ARCH-g++ -static --static'" >> config.mak
